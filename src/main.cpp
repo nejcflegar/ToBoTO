@@ -1,6 +1,7 @@
 #include <Arduino.h>
 #include <TFT_eSPI.h>
 #include "mc.h"
+#include "Objects.h"
 
 TFT_eSPI tft = TFT_eSPI();
 TFT_eSprite MainKnight = TFT_eSprite(&tft);
@@ -16,9 +17,9 @@ void setup(){
   background1.setSwapBytes(true);
   background1.fillRect(0,0,320,50,TFT_DARKGREEN);
 
-  background2.createSprite(220,190);
+  background2.createSprite(320,160);
   background2.setSwapBytes(true);
-  background2.fillRect(0,0,320,190,TFT_CYAN);
+  background2.fillRect(0,0,320,160,TFT_CYAN);
   
 
   MainKnight.createSprite(16,16);
@@ -30,5 +31,5 @@ void setup(){
 void loop(){
   MainKnight.pushToSprite(&background2,100,100,TFT_WHITE);
   background1.pushSprite(0,190);
-  background2.pushSprite(0,0);
+  background2.pushSprite(0,30);
 }
