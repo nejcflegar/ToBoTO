@@ -6,6 +6,7 @@ class Human{
         int yPos;
         int xVel;
         int yVel;
+        int skinRotation = 0;
 
         Human(int x,int y, bool LR){
             xPos = x;
