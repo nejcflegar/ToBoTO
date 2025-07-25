@@ -8,6 +8,10 @@ TFT_eSprite MainKnight = TFT_eSprite(&tft);
 TFT_eSprite background1 = TFT_eSprite(&tft);
 TFT_eSprite background2 = TFT_eSprite(&tft);
 
+
+#define buttonLeft 16
+#define buttonRight 4
+
 Human Me = Human(100,100,true);
 
 long CurrentTime = 0;
@@ -31,6 +35,10 @@ void setup(){
   MainKnight.setSwapBytes(true);
   MainKnight.pushImage(0,0,16,16,knight[Me.skinRotation]);
 
+  pinMode(buttonLeft, INPUT_PULLUP);
+  pinMode(buttonRight, INPUT_PULLUP);
+
+  Serial.begin(9600);
 }
 
 void loop(){
@@ -47,4 +55,6 @@ void loop(){
   MainKnight.pushToSprite(&background2,Me.xPos,Me.yPos,TFT_WHITE);
   background1.pushSprite(0,190);
   background2.pushSprite(0,30);
+  Serial.print(digitalRead(buttonLeft));
+//  Serial.print(digitalRead(buttonRight));
 }
