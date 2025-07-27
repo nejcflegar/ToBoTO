@@ -9,8 +9,8 @@ TFT_eSprite background1 = TFT_eSprite(&tft);
 TFT_eSprite background2 = TFT_eSprite(&tft);
 
 
-#define buttonLeft 16
-#define buttonRight 4
+#define buttonRight 16
+#define buttonLeft 4
 
 Human Me = Human(100,100,true);
 
@@ -41,6 +41,36 @@ void setup(){
   Serial.begin(9600);
 }
 
+void picture(){
+
+  MainKnight.pushToSprite(&background2,Me.xPos,Me.yPos,TFT_WHITE);
+  background1.pushSprite(0,190);
+  background2.pushSprite(0,30);
+}
+
+void gravity(){
+  if(Me.atGround != false){
+    if(Me.yVel < 100){
+      Me.yVel++;
+    }
+  }
+}
+
+void move(){
+  if(Me.yVel != 0){
+    if((0 < Me.yVel) && (Me.yVel < 25)){
+      Me.yPos++;
+    }else if((25 < Me.yVel) && (Me.yVel < 50)){
+      Me.yPos+=2;
+    }else if((50 < Me.yVel) && (Me.yVel < 75)){
+      Me.yPos+=3;
+    }else if((50 < Me.yVel) && (Me.yVel < 100)){
+      Me.yPos+=4;
+    }
+  }
+}
+
+
 void loop(){
   CurrentTime = millis();
   if(CurrentTime - BackupTimer >= 333){
@@ -52,9 +82,19 @@ void loop(){
     }
     MainKnight.pushImage(0,0,16,16,knight[Me.skinRotation]);
   }
-  MainKnight.pushToSprite(&background2,Me.xPos,Me.yPos,TFT_WHITE);
-  background1.pushSprite(0,190);
-  background2.pushSprite(0,30);
-  Serial.print(digitalRead(buttonLeft));
-//  Serial.print(digitalRead(buttonRight));
+
+  if(digitalRead(buttonLeft) == 0){
+    Me.xVel--;
+  }
+
+  
+  if(digitalRead(buttonRight) == 0){
+    Me.xVel++;
+  }else{
+  }
+
+
+  Serial.print(Me.xVel);
+  gravity();
+  picture();
 }
