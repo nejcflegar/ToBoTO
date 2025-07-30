@@ -58,19 +58,31 @@ void gravity(){
 
 void move(){
   if(Me.yVel != 0){
-    /*
-    if((0 < Me.yVel) && (Me.yVel < 25)){
-      Me.yPos++;
-    }else if((25 < Me.yVel) && (Me.yVel < 50)){     
-      Me.yPos+=2;
-    }else if((50 < Me.yVel) && (Me.yVel < 75)){
-      Me.yPos+=3;
-    }else if((50 < Me.yVel) && (Me.yVel < 100)){
-      Me.yPos+=4;
-    }
-      */
     Me.yPos += (Me.yVel / 25) + 1;
-    
+  }
+
+  if(Me.xVel != 0){
+    if(Me.xVel > 0){
+      if((0 < Me.xVel) && (Me.xVel < 25)){
+        Me.xPos++;
+      }else if((25 < Me.xVel) && (Me.xVel < 50)){     
+        Me.xPos+=2;
+      }else if((50 < Me.xVel) && (Me.xVel < 75)){
+        Me.xPos+=3;
+      }else if((75 < Me.xVel) && (Me.xVel < 100)){
+        Me.xPos+=4;
+      }
+    }else{
+      if((0 > Me.xVel) && (Me.xVel > -25)){
+        Me.xPos--;
+      }else if((-25 > Me.xVel) && (Me.xVel > -50)){     
+        Me.xPos-=2;
+      }else if((-50 > Me.xVel) && (Me.xVel > -75)){
+        Me.xPos-=3;
+      }else if((-75 > Me.xVel) && (Me.xVel > -100)){
+        Me.xPos-=4;
+      }
+    }
   }
 }
 
@@ -107,14 +119,22 @@ void loop(){
     }
   }
 
+  if(digitalRead(buttonRight) == digitalRead(buttonLeft)){
+    Me.xVel = 0;
+  }
+
+  /*
   Serial.print("Levo: ");
   Serial.print(digitalRead(buttonLeft));
   Serial.print("  ||  ");
   Serial.print("Desno: ");
   Serial.print(digitalRead(buttonRight));
   Serial.print("  ||  ");
-  Serial.println(Me.xVel);
-
+  Serial.print(Me.xVel);
+  Serial.print("  ||  ");
+  Serial.println(Me.xPos);
+  */
+  move();
   gravity();
   picture();
 }
