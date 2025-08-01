@@ -14,3 +14,16 @@ class Human{
             lookingRight = LR;
         }
 };
+
+class Ground{
+    public:
+        int xPos;
+        int yPos;
+        int skinRotation = 0;
+
+        Ground(int x, int y, int SR){
+            xPos = x;
+            yPos = y;
+            skinRotation = SR;
+        }
+};

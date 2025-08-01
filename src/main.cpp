@@ -5,9 +5,12 @@
 
 TFT_eSPI tft = TFT_eSPI();
 TFT_eSprite MainKnight = TFT_eSprite(&tft);
-TFT_eSprite background1 = TFT_eSprite(&tft);
-TFT_eSprite background2 = TFT_eSprite(&tft);
+TFT_eSprite GroundEarth = TFT_eSprite(&tft);
+TFT_eSprite BackGround = TFT_eSprite(&tft);
+TFT_eSprite SkyLine = TFT_eSprite(&tft);
 
+TFT_eSprite *GroundPicture[36];
+Ground *GroundValues[36];
 
 #define buttonRight 16
 #define buttonLeft 4
@@ -17,19 +20,34 @@ Human Me = Human(100,100,true);
 long CurrentTime = 0;
 long BackupTimer = 0;
 
+
+void createGround(){
+  int countX = 9;
+  int countY = 0;
+  for(int i = 0; i < 3; i++){
+    for(int j = 0; j < 16; j++){
+        
+      countY++;
+    }
+    countX++;
+  }
+}
+
 void setup(){
   tft.init();
   tft.setRotation(3);
-  tft.fillScreen(TFT_YELLOW);
 
-  background1.createSprite(320,50);
-  background1.setSwapBytes(true);
-  background1.fillRect(0,0,320,50,TFT_DARKGREEN);
+  GroundEarth.createSprite(320,60);
+  GroundEarth.setSwapBytes(true);
+  GroundEarth.fillRect(0,0,320,60,TFT_DARKGREEN);
 
-  background2.createSprite(320,160);
-  background2.setSwapBytes(false);
-  background2.fillRect(0,0,320,160,TFT_CYAN);
+  BackGround.createSprite(320,140);
+  BackGround.setSwapBytes(false);
+  BackGround.fillRect(0,0,320,140,TFT_CYAN);
   
+  SkyLine.createSprite(320,40);
+  SkyLine.setSwapBytes(true);
+  SkyLine.fillRect(0,0,320,40,TFT_YELLOW);
 
   MainKnight.createSprite(16,16);
   MainKnight.setSwapBytes(true);
@@ -38,14 +56,18 @@ void setup(){
   pinMode(buttonLeft, INPUT_PULLUP);
   pinMode(buttonRight, INPUT_PULLUP);
 
+  createGround();
+
   Serial.begin(9600);
 }
 
-void picture(){
 
-  MainKnight.pushToSprite(&background2,Me.xPos,Me.yPos,TFT_WHITE);
-  background1.pushSprite(0,190);
-  background2.pushSprite(0,30);
+
+void picture(){
+  MainKnight.pushToSprite(&BackGround,Me.xPos,Me.yPos,TFT_WHITE);
+  GroundEarth.pushSprite(0,180);
+  SkyLine.pushSprite(0,0);
+  BackGround.pushSprite(0,40);
 }
 
 void gravity(){
