@@ -20,18 +20,10 @@ Human Me = Human(100,100,true);
 long CurrentTime = 0;
 long BackupTimer = 0;
 
+int mapCount = 0; //sets which map is displayed
+boolean newMap = true;
 
-void createGround(){
-  int countX = 9;
-  int countY = 0;
-  for(int i = 0; i < 3; i++){
-    for(int j = 0; j < 16; j++){
-        
-      countY++;
-    }
-    countX++;
-  }
-}
+
 
 void setup(){
   tft.init();
@@ -56,7 +48,6 @@ void setup(){
   pinMode(buttonLeft, INPUT_PULLUP);
   pinMode(buttonRight, INPUT_PULLUP);
 
-  createGround();
 
   Serial.begin(9600);
 }
@@ -68,6 +59,16 @@ void picture(){
   GroundEarth.pushSprite(0,180);
   SkyLine.pushSprite(0,0);
   BackGround.pushSprite(0,40);
+}
+
+void generateMap(int x){
+  //Ground Earth
+  for(int i = 0; i < 16; i++){
+    for(int j = 0; j < 12; j++){
+
+    }
+  }
+  
 }
 
 void gravity(){
@@ -156,6 +157,12 @@ void loop(){
   Serial.print("  ||  ");
   Serial.println(Me.xPos);
   */
+
+  if(newMap == true){
+    newMap = false;
+    generateMap(mapCount);
+  }
+
   move();
   gravity();
   picture();
