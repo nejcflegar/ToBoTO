@@ -19,4 +19,11 @@ class Map{
             {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}       //220
         }
     };
+    public:
+        int getMap(int x, int i, int j){
+            return map[x][i][j];
+        }
+        Map(){
+            
+        }
 };

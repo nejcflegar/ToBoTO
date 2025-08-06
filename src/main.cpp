@@ -2,6 +2,8 @@
 #include <TFT_eSPI.h>
 #include "mc.h"
 #include "Objects.h"
+#include "maps.cpp"
+#include "tla.h"
 
 TFT_eSPI tft = TFT_eSPI();
 TFT_eSprite MainKnight = TFT_eSprite(&tft);
@@ -9,8 +11,8 @@ TFT_eSprite GroundEarth = TFT_eSprite(&tft);
 TFT_eSprite BackGround = TFT_eSprite(&tft);
 TFT_eSprite SkyLine = TFT_eSprite(&tft);
 
-TFT_eSprite *GroundPicture[36];
-Ground *GroundValues[36];
+TFT_eSprite GroundPicture[192] = TFT_eSprite(&tft);
+Ground GroundValues[192] = Ground();
 
 #define buttonRight 16
 #define buttonLeft 4
@@ -22,8 +24,8 @@ long BackupTimer = 0;
 
 int mapCount = 0; //sets which map is displayed
 boolean newMap = true;
-
-
+Map mapObj =  Map();
+int countTile = 0;
 
 void setup(){
   tft.init();
@@ -48,13 +50,22 @@ void setup(){
   pinMode(buttonLeft, INPUT_PULLUP);
   pinMode(buttonRight, INPUT_PULLUP);
 
+  for(int i = 0; i < 192; i++){
+    GroundPicture[i].createSprite(20,20);
+  }
+
 
   Serial.begin(9600);
 }
 
-
+//naredi da mas 3 arraya za 3 backgrounde in potem jih samo gor vrzeses
 
 void picture(){
+
+for(int i = 0; i < 192; i++){
+
+}  
+
   MainKnight.pushToSprite(&BackGround,Me.xPos,Me.yPos,TFT_WHITE);
   GroundEarth.pushSprite(0,180);
   SkyLine.pushSprite(0,0);
@@ -63,12 +74,22 @@ void picture(){
 
 void generateMap(int x){
   //Ground Earth
+  countTile = 0;
   for(int i = 0; i < 16; i++){
     for(int j = 0; j < 12; j++){
-
+      switch(mapObj.getMap(x,i,j)){
+        case 0: 
+          GroundPicture[countTile].pushImage(0,0,20,20,tla[0]);
+          GroundValues[countTile].setXY(i*20,j*20);
+          break;
+        case 1:
+          GroundPicture[countTile].pushImage(0,0,20,20,tla[1]);
+          GroundValues[countTile].setXY(i*20,j*20);
+          break;
+      }
+      countTile++;
     }
-  }
-  
+  } 
 }
 
 void gravity(){

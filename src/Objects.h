@@ -26,4 +26,13 @@ class Ground{
             yPos = y;
             skinRotation = SR;
         }
+
+        Ground(){
+
+        }
+
+        void setXY(int x, int y){
+            this->xPos = x;
+            this->yPos = y;
+        }
 };
